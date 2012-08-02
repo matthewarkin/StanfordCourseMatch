@@ -30,7 +30,7 @@ namespace StanfordCourseMatch.Controllers
             string email = jsonUserInfo.Value<string>("email");
             string locale = jsonUserInfo.Value<string>("locale");
             string facebook_userID = jsonUserInfo.Value<string>("id");
-            if(Membership.FindUsersByName(username)==null)
+            if(Membership.FindUsersByName(username).Count==0)//count==0 not findby==null
             Membership.CreateUser(username, (new Guid()).ToString(), email);
             //FormsAuthentication.lo
             FormsAuthentication.SetAuthCookie(username, true);

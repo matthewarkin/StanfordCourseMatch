@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=mc.dev.itligencesolutions.com;Initial Catalog=StanfordLogin;User ID=StanfordCourseMatch;Password=Stanford.!1" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Matthew\ Arkin\\documents\\visual\ studio\ 11\\Projects\\StanfordCourseMatch\\StanfordCourseMatch\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="StanfordCoursesContainer-Web.config Connection String" description="StanfordCoursesContainer Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/StanfordCourses.csdl|res://*/StanfordCourses.ssdl|res://*/StanfordCourses.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=mc.dev.itligencesolutions.com;initial catalog=StanfordCourseMatch;persist security info=True;user id=StanfordCourseMatch;password=Stanford.!1;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Matthew\ Arkin\\documents\\visual\ studio\ 11\\Projects\\StanfordCourseMatch\\StanfordCourseMatch\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='StanfordCoursesContainer']/@connectionString" />
+  </parameter>
+</parameters>

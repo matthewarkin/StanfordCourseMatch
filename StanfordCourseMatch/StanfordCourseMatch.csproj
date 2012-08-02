@@ -192,6 +192,7 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\Mc.Dev.pubxml" />
     <None Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Images\openid.png" />
     <Content Include="Images\openid_local.png" />
