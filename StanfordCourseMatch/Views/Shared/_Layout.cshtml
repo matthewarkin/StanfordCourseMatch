@@ -6,6 +6,7 @@
 		<link href="@Url.Content("~/Content/da.openid.css")" rel="stylesheet" type="text/css" />
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
+        
         @Styles.Render("~/Content/themes/base/css", "~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
     </head>
@@ -49,7 +50,7 @@
             </div>
         </footer>
 
-        @Scripts.Render("~/bundles/jquery")
+      <!--  Scripts.Render("~/bundles/jquery")-->
         @RenderSection("scripts", required: false)
     </body>
 </html>

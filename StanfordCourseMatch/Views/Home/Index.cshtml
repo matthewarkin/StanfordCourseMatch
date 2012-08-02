@@ -15,42 +15,53 @@
         </div>
     </section>
 }
+ <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  <script>
+  $(document).ready(function() {
+    $("#accordion").accordion();
+  });
+  </script>
 <h3>Are you in any of the following?</h3>
 <!--Add some sort of Javascript to expand each lecture and then expand each section. Accordian style-->
-<table>
-    @if(Model!=null){
-    foreach (StanfordCourseMatch.Lecture lect in Model)
-    {
-        <tr><td>@lect.Name</td><td>@lect.Time</td></tr>
-        foreach (StanfordCourseMatch.Section sect in lect.Sections)
-        {
 
-             <tr>
-                 <td>@sect.SectionNumber</td>
+    @if(Model!=null){
+        <div id="accordion">
+        @foreach (StanfordCourseMatch.Lecture lect in Model)
+        {
+        <div id="lecture">
+           <h3><a href="#"> @lect.Name</a></h3>
+            
+            @foreach (StanfordCourseMatch.Section sect in lect.Sections)
+            {
+              <div id="section">
+              <table><tr><td>Section: @sect.SectionNumber</td>
 
              <td>
-             @using (Html.BeginForm())
+            @using (Html.BeginForm())
              {
-                 @Html.Hidden("SectionID",sect.Id)
+                 @Html.Hidden("SectionID", sect.Id)
                  @Html.Hidden("AddUser", "true")
         
                  <input type="submit" value="I'm in this Section" />
              }
-             </td>
 
-             </tr>
-             <tr>  
-              @foreach(StanfordCourseMatch.User user in sect.Users)
+                  </tr>
+              </table>
+              @foreach (StanfordCourseMatch.User user in sect.Users)
               {
-                <td><a href=@user.FacebookUrl><img src=@user.FacebookPhoto /></a></td>
+                <a href=@user.FacebookUrl><img src=@user.FacebookPhoto /></a>
               }
-              
-      
-            </tr>
-    }
-    <tr>
-        <td>
-        @using (Html.BeginForm())
+            
+       </div>
+           }
+            
+          </div>
+       
+            
+        using (Html.BeginForm())
         {
              @Html.Hidden("LectureID",lect.Id)
              @Html.Hidden("AddSection", "true")
@@ -58,11 +69,14 @@
              @Html.TextBox("SectionNumber")
              <input type="submit" value="Add Section" />
         }
-        </td>
-    </tr>
-    
-}
-</table>
+            
+        }       
+    </div>
+        }
+            
+                  
+      
+      
 
 
     @using (Html.BeginForm())
