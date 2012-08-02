@@ -3,6 +3,9 @@
     margin: 0;
     padding: 0;
 }
+table {
+    width:inherit;
+}
 
 body {
     background-color: #fff;

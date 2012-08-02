@@ -31,37 +31,44 @@
         <div id="accordion">
         @foreach (StanfordCourseMatch.Lecture lect in Model)
         {
-        <div id="lecture">
+        
            <h3><a href="#"> @lect.Name</a></h3>
-            
+            <div>
+            <table>
             @foreach (StanfordCourseMatch.Section sect in lect.Sections)
             {
-              <div id="section">
-              <table><tr><td>Section: @sect.SectionNumber</td>
-
-             <td>
-            @using (Html.BeginForm())
+             
+              <tr><td>Section: @sect.SectionNumber</td>
+                  
+             <td><div>
+             @using(Html.BeginForm())
              {
+                
                  @Html.Hidden("SectionID", sect.Id)
                  @Html.Hidden("AddUser", "true")
         
                  <input type="submit" value="I'm in this Section" />
+                
              }
+                 </div>
+                            </td>
 
                   </tr>
-              </table>
+              <tr>
               @foreach (StanfordCourseMatch.User user in sect.Users)
-              {
+              {<td>
                 <a href=@user.FacebookUrl><img src=@user.FacebookPhoto /></a>
-              }
+                  </td>
+              }</tr>
             
-       </div>
-           }
-            
-          </div>
        
+           }
+                
             
-        using (Html.BeginForm())
+         
+       
+            <tr><td>
+        @using (Html.BeginForm())
         {
              @Html.Hidden("LectureID",lect.Id)
              @Html.Hidden("AddSection", "true")
@@ -69,7 +76,10 @@
              @Html.TextBox("SectionNumber")
              <input type="submit" value="Add Section" />
         }
-            
+     </td>       
+</tr>            
+</table>            
+         </div>  
         }       
     </div>
         }
