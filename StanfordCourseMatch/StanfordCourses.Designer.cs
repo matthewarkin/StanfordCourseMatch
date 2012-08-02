@@ -17,6 +17,13 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("StanfordCourses", "LectureSection", "Lecture", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(StanfordCourseMatch.Lecture), "Section", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(StanfordCourseMatch.Section), true)]
+[assembly: EdmRelationshipAttribute("StanfordCourses", "SectionUser", "Section", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(StanfordCourseMatch.Section), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(StanfordCourseMatch.User))]
+
+#endregion
+
 namespace StanfordCourseMatch
 {
     #region Contexts
@@ -63,6 +70,700 @@ namespace StanfordCourseMatch
     
         #endregion
     
+        #region ObjectSet Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Lecture> Lectures
+        {
+            get
+            {
+                if ((_Lectures == null))
+                {
+                    _Lectures = base.CreateObjectSet<Lecture>("Lectures");
+                }
+                return _Lectures;
+            }
+        }
+        private ObjectSet<Lecture> _Lectures;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Section> Sections
+        {
+            get
+            {
+                if ((_Sections == null))
+                {
+                    _Sections = base.CreateObjectSet<Section>("Sections");
+                }
+                return _Sections;
+            }
+        }
+        private ObjectSet<Section> _Sections;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<User> Users
+        {
+            get
+            {
+                if ((_Users == null))
+                {
+                    _Users = base.CreateObjectSet<User>("Users");
+                }
+                return _Users;
+            }
+        }
+        private ObjectSet<User> _Users;
+
+        #endregion
+
+        #region AddTo Methods
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Lectures EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToLectures(Lecture lecture)
+        {
+            base.AddObject("Lectures", lecture);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Sections EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSections(Section section)
+        {
+            base.AddObject("Sections", section);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Users EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUsers(User user)
+        {
+            base.AddObject("Users", user);
+        }
+
+        #endregion
+
+    }
+
+    #endregion
+
+    #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="StanfordCourses", Name="Lecture")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Lecture : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Lecture object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static Lecture CreateLecture(global::System.Int32 id, global::System.String name)
+        {
+            Lecture lecture = new Lecture();
+            lecture.Id = id;
+            lecture.Name = name;
+            return lecture;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Faculty
+        {
+            get
+            {
+                return _Faculty;
+            }
+            set
+            {
+                OnFacultyChanging(value);
+                ReportPropertyChanging("Faculty");
+                _Faculty = StructuralObject.SetValidValue(value, true, "Faculty");
+                ReportPropertyChanged("Faculty");
+                OnFacultyChanged();
+            }
+        }
+        private global::System.String _Faculty;
+        partial void OnFacultyChanging(global::System.String value);
+        partial void OnFacultyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Time
+        {
+            get
+            {
+                return _Time;
+            }
+            set
+            {
+                OnTimeChanging(value);
+                ReportPropertyChanging("Time");
+                _Time = StructuralObject.SetValidValue(value, true, "Time");
+                ReportPropertyChanged("Time");
+                OnTimeChanged();
+            }
+        }
+        private global::System.String _Time;
+        partial void OnTimeChanging(global::System.String value);
+        partial void OnTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Location
+        {
+            get
+            {
+                return _Location;
+            }
+            set
+            {
+                OnLocationChanging(value);
+                ReportPropertyChanging("Location");
+                _Location = StructuralObject.SetValidValue(value, true, "Location");
+                ReportPropertyChanged("Location");
+                OnLocationChanged();
+            }
+        }
+        private global::System.String _Location;
+        partial void OnLocationChanging(global::System.String value);
+        partial void OnLocationChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("StanfordCourses", "LectureSection", "Section")]
+        public EntityCollection<Section> Sections
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Section>("StanfordCourses.LectureSection", "Section");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Section>("StanfordCourses.LectureSection", "Section", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="StanfordCourses", Name="Section")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Section : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Section object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="sectionNumber">Initial value of the SectionNumber property.</param>
+        /// <param name="lectureId">Initial value of the LectureId property.</param>
+        public static Section CreateSection(global::System.Int32 id, global::System.String sectionNumber, global::System.Int32 lectureId)
+        {
+            Section section = new Section();
+            section.Id = id;
+            section.SectionNumber = sectionNumber;
+            section.LectureId = lectureId;
+            return section;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SectionNumber
+        {
+            get
+            {
+                return _SectionNumber;
+            }
+            set
+            {
+                OnSectionNumberChanging(value);
+                ReportPropertyChanging("SectionNumber");
+                _SectionNumber = StructuralObject.SetValidValue(value, false, "SectionNumber");
+                ReportPropertyChanged("SectionNumber");
+                OnSectionNumberChanged();
+            }
+        }
+        private global::System.String _SectionNumber;
+        partial void OnSectionNumberChanging(global::System.String value);
+        partial void OnSectionNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Fellow
+        {
+            get
+            {
+                return _Fellow;
+            }
+            set
+            {
+                OnFellowChanging(value);
+                ReportPropertyChanging("Fellow");
+                _Fellow = StructuralObject.SetValidValue(value, true, "Fellow");
+                ReportPropertyChanged("Fellow");
+                OnFellowChanged();
+            }
+        }
+        private global::System.String _Fellow;
+        partial void OnFellowChanging(global::System.String value);
+        partial void OnFellowChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Time
+        {
+            get
+            {
+                return _Time;
+            }
+            set
+            {
+                OnTimeChanging(value);
+                ReportPropertyChanging("Time");
+                _Time = StructuralObject.SetValidValue(value, true, "Time");
+                ReportPropertyChanged("Time");
+                OnTimeChanged();
+            }
+        }
+        private global::System.String _Time;
+        partial void OnTimeChanging(global::System.String value);
+        partial void OnTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Location
+        {
+            get
+            {
+                return _Location;
+            }
+            set
+            {
+                OnLocationChanging(value);
+                ReportPropertyChanging("Location");
+                _Location = StructuralObject.SetValidValue(value, true, "Location");
+                ReportPropertyChanged("Location");
+                OnLocationChanged();
+            }
+        }
+        private global::System.String _Location;
+        partial void OnLocationChanging(global::System.String value);
+        partial void OnLocationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 LectureId
+        {
+            get
+            {
+                return _LectureId;
+            }
+            set
+            {
+                OnLectureIdChanging(value);
+                ReportPropertyChanging("LectureId");
+                _LectureId = StructuralObject.SetValidValue(value, "LectureId");
+                ReportPropertyChanged("LectureId");
+                OnLectureIdChanged();
+            }
+        }
+        private global::System.Int32 _LectureId;
+        partial void OnLectureIdChanging(global::System.Int32 value);
+        partial void OnLectureIdChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("StanfordCourses", "LectureSection", "Lecture")]
+        public Lecture Lecture
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Lecture>("StanfordCourses.LectureSection", "Lecture").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Lecture>("StanfordCourses.LectureSection", "Lecture").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Lecture> LectureReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Lecture>("StanfordCourses.LectureSection", "Lecture");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Lecture>("StanfordCourses.LectureSection", "Lecture", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("StanfordCourses", "SectionUser", "User")]
+        public EntityCollection<User> Users
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("StanfordCourses.SectionUser", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("StanfordCourses.SectionUser", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="StanfordCourses", Name="User")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class User : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new User object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="facebookPhoto">Initial value of the FacebookPhoto property.</param>
+        /// <param name="facebookUrl">Initial value of the FacebookUrl property.</param>
+        /// <param name="username">Initial value of the username property.</param>
+        public static User CreateUser(global::System.Int32 id, global::System.String name, global::System.String facebookPhoto, global::System.String facebookUrl, global::System.String username)
+        {
+            User user = new User();
+            user.Id = id;
+            user.Name = name;
+            user.FacebookPhoto = facebookPhoto;
+            user.FacebookUrl = facebookUrl;
+            user.username = username;
+            return user;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value, "Id");
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FacebookPhoto
+        {
+            get
+            {
+                return _FacebookPhoto;
+            }
+            set
+            {
+                OnFacebookPhotoChanging(value);
+                ReportPropertyChanging("FacebookPhoto");
+                _FacebookPhoto = StructuralObject.SetValidValue(value, false, "FacebookPhoto");
+                ReportPropertyChanged("FacebookPhoto");
+                OnFacebookPhotoChanged();
+            }
+        }
+        private global::System.String _FacebookPhoto;
+        partial void OnFacebookPhotoChanging(global::System.String value);
+        partial void OnFacebookPhotoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FacebookUrl
+        {
+            get
+            {
+                return _FacebookUrl;
+            }
+            set
+            {
+                OnFacebookUrlChanging(value);
+                ReportPropertyChanging("FacebookUrl");
+                _FacebookUrl = StructuralObject.SetValidValue(value, false, "FacebookUrl");
+                ReportPropertyChanged("FacebookUrl");
+                OnFacebookUrlChanged();
+            }
+        }
+        private global::System.String _FacebookUrl;
+        partial void OnFacebookUrlChanging(global::System.String value);
+        partial void OnFacebookUrlChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String username
+        {
+            get
+            {
+                return _username;
+            }
+            set
+            {
+                OnusernameChanging(value);
+                ReportPropertyChanging("username");
+                _username = StructuralObject.SetValidValue(value, false, "username");
+                ReportPropertyChanged("username");
+                OnusernameChanged();
+            }
+        }
+        private global::System.String _username;
+        partial void OnusernameChanging(global::System.String value);
+        partial void OnusernameChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("StanfordCourses", "SectionUser", "Section")]
+        public EntityCollection<Section> Sections
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Section>("StanfordCourses.SectionUser", "Section");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Section>("StanfordCourses.SectionUser", "Section", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
 
     #endregion

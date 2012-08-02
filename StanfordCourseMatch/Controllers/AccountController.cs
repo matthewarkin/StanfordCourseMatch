@@ -34,6 +34,7 @@ namespace StanfordCourseMatch.Controllers
             Membership.CreateUser(username, (new Guid()).ToString(), email);
             //FormsAuthentication.lo
             FormsAuthentication.SetAuthCookie(username, true);
+            
             return RedirectToAction("Index", "Home");
         }
         

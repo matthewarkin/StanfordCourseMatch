@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="StanfordCourses" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="StanfordCoursesContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Lectures" EntityType="StanfordCourses.Lecture" />
+    <EntitySet Name="Sections" EntityType="StanfordCourses.Section" />
+    <AssociationSet Name="LectureSection" Association="StanfordCourses.LectureSection">
+      <End Role="Lecture" EntitySet="Lectures" />
+      <End Role="Section" EntitySet="Sections" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="StanfordCourses.User" />
+    <AssociationSet Name="SectionUser" Association="StanfordCourses.SectionUser">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Lecture">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Faculty" Nullable="true" />
+    <Property Type="String" Name="Time" Nullable="true" />
+    <Property Type="String" Name="Location" Nullable="true" />
+    <NavigationProperty Name="Sections" Relationship="StanfordCourses.LectureSection" FromRole="Lecture" ToRole="Section" />
+  </EntityType>
+  <EntityType Name="Section">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="SectionNumber" Nullable="false" />
+    <Property Type="String" Name="Fellow" Nullable="true" />
+    <Property Type="String" Name="Time" Nullable="true" />
+    <Property Type="String" Name="Location" Nullable="true" />
+    <NavigationProperty Name="Lecture" Relationship="StanfordCourses.LectureSection" FromRole="Section" ToRole="Lecture" />
+    <Property Type="Int32" Name="LectureId" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="StanfordCourses.SectionUser" FromRole="Section" ToRole="User" />
+  </EntityType>
+  <Association Name="LectureSection">
+    <End Type="StanfordCourses.Lecture" Role="Lecture" Multiplicity="1" />
+    <End Type="StanfordCourses.Section" Role="Section" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecture">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Section">
+        <PropertyRef Name="LectureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="FacebookPhoto" Nullable="false" />
+    <Property Type="String" Name="FacebookUrl" Nullable="false" />
+    <NavigationProperty Name="Sections" Relationship="StanfordCourses.SectionUser" FromRole="User" ToRole="Section" />
+    <Property Type="String" Name="username" Nullable="false" />
+  </EntityType>
+  <Association Name="SectionUser">
+    <End Type="StanfordCourses.Section" Role="Section" Multiplicity="*" />
+    <End Type="StanfordCourses.User" Role="User" Multiplicity="*" />
+  </Association>
+</Schema>

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<StanfordCourseMatch.Lecture>
+@{
     ViewBag.Title = "Home Page";
 }
 @section featured {
@@ -15,6 +16,62 @@
     </section>
 }
 <h3>Are you in any of the following?</h3>
+<!--Add some sort of Javascript to expand each lecture and then expand each section. Accordian style-->
+<table>
+    @if(Model!=null){
+    foreach (StanfordCourseMatch.Lecture lect in Model)
+    {
+        <tr><td>@lect.Name</td><td>@lect.Time</td></tr>
+        foreach (StanfordCourseMatch.Section sect in lect.Sections)
+        {
+
+             <tr>
+                 <td>@sect.SectionNumber</td>
+
+             <td>
+             @using (Html.BeginForm())
+             {
+                 @Html.Hidden("SectionID",sect.Id)
+                 @Html.Hidden("AddUser", "true")
+        
+                 <input type="submit" value="I'm in this Section" />
+             }
+             </td>
+
+             </tr>
+             <tr>  
+              @foreach(StanfordCourseMatch.User user in sect.Users)
+              {
+                <td><a href=@user.FacebookUrl><img src=@user.FacebookPhoto /></a></td>
+              }
+              
+      
+            </tr>
+    }
+    <tr>
+        <td>
+        @using (Html.BeginForm())
+        {
+             @Html.Hidden("LectureID",lect.Id)
+             @Html.Hidden("AddSection", "true")
+             @Html.Label("Section Number")
+             @Html.TextBox("SectionNumber")
+             <input type="submit" value="Add Section" />
+        }
+        </td>
+    </tr>
+    
+}
+</table>
+
+
+    @using (Html.BeginForm())
+    {
+    @Html.Hidden("AddLecture", "true")
+    @Html.Label("Course Name")
+    @Html.TextBox("CourseName")
+<input type="submit" value="Add Lecture" />
+    }
 <!--
 <ol class="round">
     <li class="one">

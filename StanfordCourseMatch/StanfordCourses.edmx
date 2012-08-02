@@ -4,27 +4,218 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="StanfordCourses.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="StanfordCoursesTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="StanfordCourses.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="StanfordCoursesStoreContainer">
+    <EntitySet Name="Lectures" EntityType="StanfordCourses.Store.Lectures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sections" EntityType="StanfordCourses.Store.Sections" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="StanfordCourses.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SectionUser" EntityType="StanfordCourses.Store.SectionUser" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LectureSection" Association="StanfordCourses.Store.LectureSection">
+      <End Role="Lecture" EntitySet="Lectures" />
+      <End Role="Section" EntitySet="Sections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SectionUser_Section" Association="StanfordCourses.Store.FK_SectionUser_Section">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="SectionUser" EntitySet="SectionUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SectionUser_User" Association="StanfordCourses.Store.FK_SectionUser_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SectionUser" EntitySet="SectionUser" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Lectures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Faculty" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Sections">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SectionNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fellow" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LectureId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FacebookPhoto" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FacebookUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SectionUser">
+    <Key>
+      <PropertyRef Name="Sections_Id" />
+      <PropertyRef Name="Users_Id" />
+    </Key>
+    <Property Name="Sections_Id" Type="int" Nullable="false" />
+    <Property Name="Users_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="LectureSection">
+    <End Role="Lecture" Type="StanfordCourses.Store.Lectures" Multiplicity="1" />
+    <End Role="Section" Type="StanfordCourses.Store.Sections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecture">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Section">
+        <PropertyRef Name="LectureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SectionUser_Section">
+    <End Role="Section" Type="StanfordCourses.Store.Sections" Multiplicity="1" />
+    <End Role="SectionUser" Type="StanfordCourses.Store.SectionUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SectionUser">
+        <PropertyRef Name="Sections_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SectionUser_User">
+    <End Role="SectionUser" Type="StanfordCourses.Store.SectionUser" Multiplicity="*" />
+    <End Role="User" Type="StanfordCourses.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SectionUser">
+        <PropertyRef Name="Users_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="StanfordCourses" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="StanfordCoursesContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Lectures" EntityType="StanfordCourses.Lecture" />
+          <EntitySet Name="Sections" EntityType="StanfordCourses.Section" />
+          <AssociationSet Name="LectureSection" Association="StanfordCourses.LectureSection">
+            <End Role="Lecture" EntitySet="Lectures" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="StanfordCourses.User" />
+          <AssociationSet Name="SectionUser" Association="StanfordCourses.SectionUser">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Lecture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Faculty" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" />
+          <Property Type="String" Name="Location" Nullable="true" />
+          <NavigationProperty Name="Sections" Relationship="StanfordCourses.LectureSection" FromRole="Lecture" ToRole="Section" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SectionNumber" Nullable="false" />
+          <Property Type="String" Name="Fellow" Nullable="true" />
+          <Property Type="String" Name="Time" Nullable="true" />
+          <Property Type="String" Name="Location" Nullable="true" />
+          <NavigationProperty Name="Lecture" Relationship="StanfordCourses.LectureSection" FromRole="Section" ToRole="Lecture" />
+          <Property Type="Int32" Name="LectureId" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="StanfordCourses.SectionUser" FromRole="Section" ToRole="User" />
+        </EntityType>
+        <Association Name="LectureSection">
+          <End Type="StanfordCourses.Lecture" Role="Lecture" Multiplicity="1" />
+          <End Type="StanfordCourses.Section" Role="Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecture">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="LectureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="FacebookPhoto" Nullable="false" />
+          <Property Type="String" Name="FacebookUrl" Nullable="false" />
+          <NavigationProperty Name="Sections" Relationship="StanfordCourses.SectionUser" FromRole="User" ToRole="Section" />
+          <Property Type="String" Name="username" Nullable="false" />
+        </EntityType>
+        <Association Name="SectionUser">
+          <End Type="StanfordCourses.Section" Role="Section" Multiplicity="*" />
+          <End Type="StanfordCourses.User" Role="User" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="StanfordCourses" />
-        <Alias Key="Target" Value="StanfordCourses.Store" />
-        <EntityContainerMapping CdmEntityContainer="StanfordCoursesContainer" StorageEntityContainer="StanfordCoursesTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StanfordCoursesStoreContainer" CdmEntityContainer="StanfordCoursesContainer">
+    <EntitySetMapping Name="Lectures">
+      <EntityTypeMapping TypeName="IsTypeOf(StanfordCourses.Lecture)">
+        <MappingFragment StoreEntitySet="Lectures">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Faculty" ColumnName="Faculty" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sections">
+      <EntityTypeMapping TypeName="IsTypeOf(StanfordCourses.Section)">
+        <MappingFragment StoreEntitySet="Sections">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SectionNumber" ColumnName="SectionNumber" />
+          <ScalarProperty Name="Fellow" ColumnName="Fellow" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="LectureId" ColumnName="LectureId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(StanfordCourses.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FacebookPhoto" ColumnName="FacebookPhoto" />
+          <ScalarProperty Name="FacebookUrl" ColumnName="FacebookUrl" />
+          <ScalarProperty Name="username" ColumnName="username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SectionUser" TypeName="StanfordCourses.SectionUser" StoreEntitySet="SectionUser">
+      <EndProperty Name="Section">
+        <ScalarProperty Name="Id" ColumnName="Sections_Id" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="Users_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">

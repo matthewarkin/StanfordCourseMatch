@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StanfordCourses.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="StanfordCoursesStoreContainer">
+    <EntitySet Name="Lectures" EntityType="StanfordCourses.Store.Lectures" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sections" EntityType="StanfordCourses.Store.Sections" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="StanfordCourses.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SectionUser" EntityType="StanfordCourses.Store.SectionUser" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LectureSection" Association="StanfordCourses.Store.LectureSection">
+      <End Role="Lecture" EntitySet="Lectures" />
+      <End Role="Section" EntitySet="Sections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SectionUser_Section" Association="StanfordCourses.Store.FK_SectionUser_Section">
+      <End Role="Section" EntitySet="Sections" />
+      <End Role="SectionUser" EntitySet="SectionUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SectionUser_User" Association="StanfordCourses.Store.FK_SectionUser_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SectionUser" EntitySet="SectionUser" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Lectures">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Faculty" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Sections">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SectionNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fellow" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LectureId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FacebookPhoto" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FacebookUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SectionUser">
+    <Key>
+      <PropertyRef Name="Sections_Id" />
+      <PropertyRef Name="Users_Id" />
+    </Key>
+    <Property Name="Sections_Id" Type="int" Nullable="false" />
+    <Property Name="Users_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="LectureSection">
+    <End Role="Lecture" Type="StanfordCourses.Store.Lectures" Multiplicity="1" />
+    <End Role="Section" Type="StanfordCourses.Store.Sections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecture">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Section">
+        <PropertyRef Name="LectureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SectionUser_Section">
+    <End Role="Section" Type="StanfordCourses.Store.Sections" Multiplicity="1" />
+    <End Role="SectionUser" Type="StanfordCourses.Store.SectionUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Section">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SectionUser">
+        <PropertyRef Name="Sections_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SectionUser_User">
+    <End Role="SectionUser" Type="StanfordCourses.Store.SectionUser" Multiplicity="*" />
+    <End Role="User" Type="StanfordCourses.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SectionUser">
+        <PropertyRef Name="Users_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
